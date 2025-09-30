@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Election Sentiment Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-poll"></i> Election Sentiment Analyzer</h1>
+            <p class="subtitle">Upload CSV files containing election-related text to analyze public sentiment</p>
+        </header>
+
+        <section class="upload-section">
+            <div class="card">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <div class="alert">
+                            {% for message in messages %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <h2><i class="fas fa-file-upload"></i> Upload CSV File</h2>
+                <p>Please upload a CSV file containing election-related text data.</p>
+                
+                <form method="POST" action="{{ url_for('upload_file') }}" enctype="multipart/form-data" class="upload-form">
+                    <div class="file-upload">
+                        <input type="file" name="file" id="file" accept=".csv" required>
+                        <label for="file">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Choose a file</span>
+                        </label>
+                        <p id="file-name">No file selected</p>
+                    </div>
+                    <button type="submit" class="btn"><i class="fas fa-analytics"></i> Analyze Sentiment</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="instructions">
+            <div class="card">
+                <h2><i class="fas fa-info-circle"></i> How It Works</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Upload CSV</h3>
+                            <p>Upload a CSV file containing election-related text data. The file should have a column with text content.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Processing</h3>
+                            <p>Our system cleans the text, removes stopwords, and analyzes sentiment using natural language processing.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Results</h3>
+                            <p>View detailed sentiment analysis with visualizations and predictions about election outcomes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="faq">
+            <div class="card">
+                <h2><i class="fas fa-question-circle"></i> Frequently Asked Questions</h2>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">What file format is accepted?</div>
+                        <div class="accordion-content">
+                            <p>We accept CSV (Comma Separated Values) files. Make sure your file has at least one column containing text to analyze.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">How does the sentiment analysis work?</div>
+                        <div class="accordion-content">
+                            <p>We use natural language processing to analyze text sentiment. Each piece of text receives a score from -1 (very negative) to 1 (very positive). These scores help predict public opinion trends.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">Is my data secure?</div>
+                        <div class="accordion-content">
+                            <p>Yes, all uploads are processed locally on the server and are not shared with third parties. Files are given unique identifiers to prevent conflicts.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 Election Sentiment Analyzer | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

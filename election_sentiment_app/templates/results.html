@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results - Election Sentiment Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-poll"></i> Election Sentiment Analyzer</h1>
+            <p class="subtitle">Analysis Results for: {{ filename }}</p>
+        </header>
+        
+        <section class="results-header">
+            <a href="{{ url_for('index') }}" class="btn back-btn"><i class="fas fa-arrow-left"></i> Back to Upload</a>
+            <a href="{{ url_for('download_file', filename=processed_file) }}" class="btn download-btn"><i class="fas fa-download"></i> Download Results</a>
+        </section>
+        
+        <section class="summary-section">
+            <div class="card">
+                <h2><i class="fas fa-chart-pie"></i> Sentiment Analysis Summary</h2>
+                
+                <div class="summary-stats">
+                    <div class="stat">
+                        <h3>Positive</h3>
+                        <div class="stat-value positive">{{ summary.percentages.Positive }}%</div>
+                        <div class="stat-count">{{ summary.sentiment_counts.get('Positive', 0) }} entries</div>
+                    </div>
+                    <div class="stat">
+                        <h3>Neutral</h3>
+                        <div class="stat-value neutral">{{ summary.percentages.Neutral }}%</div>
+                        <div class="stat-count">{{ summary.sentiment_counts.get('Neutral', 0) }} entries</div>
+                    </div>
+                    <div class="stat">
+                        <h3>Negative</h3>
+                        <div class="stat-value negative">{{ summary.percentages.Negative }}%</div>
+                        <div class="stat-count">{{ summary.sentiment_counts.get('Negative', 0) }} entries</div>
+                    </div>
+                </div>
+                
+                <div class="avg-sentiment">
+                    <h3>Average Sentiment Score</h3>
+                    <div class="sentiment-meter">
+                        <div class="meter">
+                        </div>
+                        <div class="meter-labels">
+                            <span>-1</span>
+                            <span>0</span>
+                            <span>+1</span>
+                        </div>
+                    </div>
+                    <div class="sentiment-score">{{ summary.avg_sentiment }}</div>
+                </div>
+                
+                <div class="prediction-box">
+                    <h3><i class="fas fa-lightbulb"></i> Election Outcome Prediction</h3>
+                    <p>{{ summary.prediction }}</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="charts-section">
+            <div class="card">
+                <h2><i class="fas fa-chart-bar"></i> Visualization</h2>
+                
+                <div class="charts-container">
+                    <div class="chart">
+                        <h3>Sentiment Distribution</h3>
+                        <img src="data:image/png;base64,{{ charts.pie_chart }}" alt="Sentiment Distribution Pie Chart">
+                    </div>
+                    <div class="chart">
+                        <h3>Sentiment Score Histogram</h3>
+                        <img src="data:image/png;base64,{{ charts.histogram }}" alt="Sentiment Score Histogram">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="interpretation">
+            <div class="card">
+                <h2><i class="fas fa-comment-alt"></i> Analysis Interpretation</h2>
+                
+                <div class="interpretation-content">
+                    <p>This sentiment analysis provides insights into public opinion based on the text data in your CSV file. Here's what these results mean:</p>
+                    
+                    <ul>
+                        <li><strong>Sentiment Distribution:</strong> Shows the percentage breakdown of positive, neutral, and negative sentiments in your dataset.</li>
+                        <li><strong>Average Sentiment:</strong> The overall sentiment score averaging all entries, indicating the general public opinion.</li>
+                        <li><strong>Histogram:</strong> Displays the distribution of sentiment scores, showing how opinions are spread across the spectrum.</li>
+                    </ul>
+                    
+                    <p>Based on historical election data, sentiment scores correlate with election outcomes. Positive sentiment generally indicates support for incumbents or leading candidates, while negative sentiment may suggest a desire for change.</p>
+                    
+                    <div class="note">
+                        <p><strong>Note:</strong> This analysis is based solely on the text data provided and represents a simplified model. For more accurate election predictions, consider additional factors such as demographic information, historical voting patterns, and regional variations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>&copy; 2025 Election Sentiment Analyzer | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
